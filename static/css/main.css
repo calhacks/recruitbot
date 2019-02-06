@@ -1,0 +1,149 @@
+/* RESETS */
+html,
+body,
+img,
+h1,
+h2,
+h3,
+p,
+li,
+ul {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+div,
+header,
+main,
+footer,
+input,
+select,
+textarea {
+    box-sizing: border-box;
+}
+
+h2,
+h3 {
+    font-weight: normal;
+}
+
+h1,
+h2,
+h3,
+p {
+    line-height: 1.5em;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+a {
+    color: var(--rb-dark-primary);
+}
+
+/* CSS VARS */
+
+body {
+    --rb-dark-primary: #3b9bc2;
+    --rb-light-primary: #97d0ed;
+    --rb-bg-primary: #f3fbff;
+
+    --rb-affirmative: #39a573;
+    --rb-negative: #da4669;
+
+    --shadow: 0 5px 20px -3px rgba(0, 0, 0, .3);
+}
+
+/* APP STYLES */
+
+body {
+    background: var(--rb-bg-primary);
+    font-family: 'Muli', 'Arial', sans-serif;
+}
+
+header {
+    height: 80px;
+    width: 100%;
+    background: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-bottom: 1px solid var(--rb-dark-primary);
+    box-sizing: border-box;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 10;
+}
+
+nav a {
+    margin-left: 12px;
+    color: var(--rb-dark-primary);
+}
+
+nav a:hover {
+    opacity: .7;
+}
+
+main {
+    max-width: 900px;
+    margin: 24px auto;
+    margin-top: 92px;
+}
+
+@media (max-width: 1000px) {
+    main {
+        max-width: unset;
+        width: 94%;
+    }
+}
+
+@media (max-width: 500px) {
+    .desktoponly {
+        display: none;
+    }
+}
+
+header nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+input, button {
+    display: block;
+    border-radius: 3px;
+    padding: 8px 12px;
+    font-size: 1em;
+}
+
+input {
+    border: 1px solid var(--rb-dark-primary);
+}
+
+button {
+    border: 0;
+    background: var(--rb-dark-primary);
+    color: #fff;
+    margin-right: 12px;
+    transition: opacity .1s;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: .8;
+}
+
+button.aff {
+    background: var(--rb-affirmative);
+}
+
+button.neg{
+    background: var(--rb-negative);
+}
