@@ -334,8 +334,6 @@ class App extends StyledComponent {
             <h3>Grades</h3>
             <p class="gradingAs">
                 Grading as <strong>${this.graded_by || '...'}</strong>
-                |
-                Read the <a href="https://docs.google.com/document/d/1G2XEGrSiaUIEzGN-uyjrW8FYBLRz8k2GsheJv1GQmNo/edit#" target="_blank">Grading Guide</a>
             </p>
             <div class="grades">
                 <div class="inputGroup">
