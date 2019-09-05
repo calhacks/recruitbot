@@ -14,7 +14,7 @@ const clipRange = (val, min, max) => {
 }
 
 const pillify = stringList => {
-    return stringList.split(';').map(item => {
+    return stringList.split(',').map(item => {
         return jdom`<div class="pill">${item}</div>`;
     });
 }
@@ -32,7 +32,7 @@ class SubmissionView extends Styled(Component.from(data => {
             </div>
             <div class="info">
                 <p class="label">Email</p>
-                <p style="word-wrap:break-word">${data.username}</p>
+                <p style="word-wrap:break-word">${data.email}</p>
             </div>
             <div class="info">
                 <p class="label">Grade Level</p>
@@ -44,38 +44,44 @@ class SubmissionView extends Styled(Component.from(data => {
             </div>
             <div class="info">
                 <p class="label">Attended Cal Hacks before?</p>
-                <p>${pillify(data.attended_calhacks_before)}</p>
+                <p>${pillify(data.has_attended_before ? 'Yes' : 'No')}</p>
             </div>
+            ${data.has_attended_before ? (
+                jdom`<div class="info">
+                    <p class="label">Past roles</p>
+                    <p>${pillify(data.attended_roles
+                        .split(',')
+                        .map(s => s.replace('I\'ve attended as a ', ''))
+                        .join(','))}</p>
+                </div>`
+            ) : null}
             <div class="info">
                 <p class="label">Interested roles</p>
-                <p>${pillify(data.interested_roles)}</p>
+                <p>${pillify(data.attended_interested_roles
+                    || data.not_attended_interested_roles)}</p>
             </div>
             <div class="info">
                 <p class="label">Resume</p>
-                <p><a href="${data.resume_url}" target="_blank">Click here to see on Drive</a></p>
+                <p><a href="${data.resume_url}" target="_blank">See on Drive</a></p>
             </div>
         </div>
 
         <div class="submission_answers">
             <div class="answer">
-                <p class="label">Why do you want to join the Cal Hacks team? What will you uniquely contribute?  [250 words max]</p>
+                <p class="label">Why do you want to join the Cal Hacks team? What will you uniquely contribute?  [1500 chars max]</p>
                 <p>${paragraph(data.question_1)}</p>
             </div>
             <div class="answer">
-                <p class="label">If you have attended Cal Hacks before, what's something that you'd like to improve and how would you go about doing it? If not, what do you think makes a great event/hackathon? [250 words max]</p>
+                <p class="label">If you have attended Cal Hacks before, what's something that you'd like to improve and how would you go about doing it? If not, what do you think makes a great event/hackathon? [1500 chars max]</p>
                 <p>${paragraph(data.question_2)}</p>
+            </div>
+            <div class="answer">
+                <p class="label">Other links</p>
+                <p>${data.ref_links || '(none)'}</p>
             </div>
             <div class="answer">
                 <p class="label">Extras</p>
                 <p>${paragraph(data.extras || '(none)')}</p>
-            </div>
-            <div class="answer">
-                <p class="label">Design Portfolio</p>
-                <p>${data.design_portfolio || '(none)'}</p>
-            </div>
-            <div class="answer">
-                <p class="label">Tech Portfolio</p>
-                <p>${data.tech_portfolio || '(none)'}</p>
             </div>
         </div>
     </div>`;
@@ -325,7 +331,7 @@ class App extends StyledComponent {
     compose() {
         return jdom`<main>
             <div class="navButtons">
-                <h2 class="appNumber">App #${this.submission_number}</h2>
+                <h2 class="appNumber">App #${this.submission_number}/${this.submissionData && this.submissionData.maxNumber}</h2>
                 <button class="prevButton" onclick="${this.prevClick}">👈 Previous</button>
                 <button class="nextButton" onclick="${this.nextClick}">Next 👉</button>
                 <button class="goToNumber" onclick="${this.goToNumberClick}">🔢 Go to number</button>

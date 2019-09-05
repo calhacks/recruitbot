@@ -274,18 +274,26 @@ class Submission extends StoredObject {
         return {
             number: Number,
             timestamp: String,
-            username: String,
+            email: String,
             full_name: String,
             grade_level: String,
             major: String,
             resume_url: String,
-            design_portfolio: String,
-            tech_portfolio: String,
-            attended_calhacks_before: String,
-            question_1: String,
-            question_2: String,
-            interested_roles: String,
-            extras: String,
+            ref_links: String,
+
+            has_attended_before: Boolean,
+
+            attended_roles: String,
+            attended_question_1: String,
+            attended_question_2: String,
+            attended_interested_roles: String,
+            attended_extras: String,
+
+            not_attended_question_1: String,
+            not_attended_question_2: String,
+            not_attended_interested_roles: String,
+            not_attended_extras: String,
+
             rejected: Boolean,
         }
     }
@@ -298,9 +306,28 @@ class Submission extends StoredObject {
         return []; // submissions are read-only
     }
 
+    getGeneralizedAnswerParts() {
+        if (this.get('has_attended_before')) {
+            return {
+                question_1: this.get('attended_question_1'),
+                question_2: this.get('attended_question_2'),
+                interested_roles: this.get('attended_interested_roles'),
+                extras: this.get('attended_extras'),
+            }
+        } else {
+            return {
+                question_1: this.get('not_attended_question_1'),
+                question_2: this.get('not_attended_question_2'),
+                interested_roles: this.get('not_attended_interested_roles'),
+                extras: this.get('not_attended_extras'),
+            }
+        }
+    }
+
     toJSON() {
         return {
             ...super.toJSON(),
+            ...this.getGeneralizedAnswerParts(),
             maxNumber: this.constructor.all().length,
         }
     }
