@@ -386,30 +386,24 @@ class Grade extends StoredObject {
     }
 
     getWeighted() {
-        return this.get('q1_grade')
-            + this.get('q2_grade')
-            + this.get('overall_grade');
+        return this.get('q1_grade') + this.get('q2_grade') + this.get('overall_grade');
     }
 
-    static getMinScoreForGrader(grader) {
+    static getMinMaxScoresForGrader(grader) {
         const gradesFromGrader = this.where({
             graded_by: grader,
         });
-        return Math.min(...gradesFromGrader.map(g => g.getWeighted()));
-    }
+        const weighted = gradesFromGrader.map(g => g.getWeighted());
 
-    static getMaxScoreForGrader(grader) {
-        const gradesFromGrader = this.where({
-            graded_by: grader,
-        });
-        return Math.max(...gradesFromGrader.map(g => g.getWeighted()));
+        return [
+            Math.min(...weighted),
+            Math.max(...weighted),
+        ]
     }
 
     normalize() {
         const grader = this.get('graded_by');
-
-        const min = this.constructor.getMinScoreForGrader(grader);
-        const max = this.constructor.getMaxScoreForGrader(grader);
+        const [min, max] = this.constructor.getMinMaxScoresForGrader(grader);
 
         if (min === max) {
             return this.getWeighted();
