@@ -13,7 +13,7 @@ const render = () => {
                 return `
                     <li>
                     ${sub.get('full_name')}
-                    <a href="/submissions/${sub.get('number')}">${sub.get('username')}</a>
+                    <a href="/submissions/${sub.get('number')}">${sub.get('email')}</a>
                     (${~~(sub.getNormalizedOverallGrade() * 100) / 100})
                     </li>
                 `;

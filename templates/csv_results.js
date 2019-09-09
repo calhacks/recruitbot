@@ -22,7 +22,7 @@ const render = () => {
             ${sortBy(Submission.all(), s => -s.getNormalizedOverallGrade()).map(sub => {
                 return `
                     <li>
-                    ${sub.get('username')}
+                    ${sub.get('email')}
                     </li>
                 `;
             }).join('\n')}

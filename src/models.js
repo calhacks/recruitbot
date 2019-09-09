@@ -299,7 +299,9 @@ class Submission extends StoredObject {
     }
 
     static get defaults() {
-        return {}
+        return {
+            rejected: false,
+        }
     }
 
     static get writable() {
