@@ -22,7 +22,7 @@ const render = () => {
         <p>Grading <strong>${Submission.all().length}</strong> director applications</p>
         <ul class="submissions">
             ${sortBy(Object.entries(graderByCount), pair => pair[1]).map(([grader, count]) => {
-                return `<li><strong>${count}</strong> graded by ${grader}</li>`;
+                return `<li><strong>${count}</strong> graded by <a href="/results/${grader}">${grader}</a></li>`;
             }).join('\n')}
         </ul>
     `;
